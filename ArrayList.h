@@ -20,6 +20,7 @@ public:
   bool insert(const int& position, const ItemType& newItem);
   bool remove(const int& position);
   bool replace(const int& position, const ItemType& newItem);
+  void displayEntry() const;
 };
 
 #include "ArrayList.cpp"

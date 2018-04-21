@@ -65,3 +65,14 @@ bool ArrayList<ItemType>::replace(const int& position, const ItemType& newItem) 
     return false;
   }
 }
+
+template<class ItemType>
+void ArrayList<ItemType>::displayEntry() const {
+  for (int i=1; i <= itemCount; i++) {
+    cout << getEntry(i) << " ";
+  }
+  if (itemCount == 0) {
+    cout << "No Entries";
+  }
+  cout << endl;
+}
