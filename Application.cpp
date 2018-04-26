@@ -8,9 +8,12 @@ using namespace std;
 
 struct Product {
   string name;
-  int price;
+  float price;
   int amount;
 } product;
+
+void enterProduct(LinkList<Product>* list);
+void viewProduct(LinkList<Product>* list);
 
 int main() {
   LinkList<Product>* list = new LinkList<Product>;
@@ -22,29 +25,11 @@ int main() {
     cin.ignore();
     switch(choice) {
       case 1:
-        while(choice==1) {
-          cout << endl << "Enter the name: ";
-          getline(cin, product.name);
-          cout << "Enter the unit price: ";
-          cin >> product.price;
-          cout << "Enter the amount of product: ";
-          cin >> product.amount;
-          // cin.ignore();
-          list->insert(1, product);
-          cout << "Enter another product? (1 - yes. 2 - no) ";
-          cin >> choice;
-          cin.ignore();
-        }
+        enterProduct(list);
         cout << endl;
         break;
       case 2:
-        cout << "----------------------------------------" << endl
-             << "     Name     |  Unit Price  |  Amount  " << endl
-             << "----------------------------------------" << endl;
-        for(int i=1; i<=list->getItemCount(); i++) {
-          product = list->getEntry(i);
-          cout << setw(17) << left << product.name << "$ " << setw(14) << left << product.price << setw(10) << left << product.amount << endl;
-        }
+        viewProduct(list);
         cout << endl;
         break;
       case 3:
@@ -58,4 +43,37 @@ int main() {
     }
   }
   return 0;
+}
+
+void enterProduct(LinkList<Product>* list) {
+  int choice=1;
+  while (choice == 1) {
+    cout << endl << "Enter the name: ";
+    getline(cin, product.name);
+    cout << "Enter the unit price: ";
+    cin >> product.price;
+    cout << "Enter the amount of product: ";
+    cin >> product.amount;
+    // cin.ignore();
+    list->insert(1, product);
+    cout << "Enter another product? (1 - yes. 2 - no) ";
+    cin >> choice;
+    cin.ignore();
+  }
+}
+
+void viewProduct(LinkList<Product>* list) {
+  int totalAmount = 0;
+  float totalPrice = 0.0;
+  cout << "------------------------------------------------------" << endl
+       << "     Name     |  Unit Price  |  Amount  | Total Price " << endl
+       << "------------------------------------------------------" << endl;
+  for(int i=list->getItemCount(); i>=1; i--) {
+    product = list->getEntry(i);
+    cout << setw(17) << left << product.name << "$ " << setw(14) << left << product.price << setw(10) << left << product.amount << "$ " << setw(10) << left << product.amount*product.price << endl;
+    totalAmount += product.amount;
+    totalPrice += (product.amount*product.price);
+  }
+  cout << "------------------------------------------------------" << endl
+       << "                             |   " << setw(6) << left << totalAmount << " |  $ " << setw(10) << left << totalPrice << endl;
 }
