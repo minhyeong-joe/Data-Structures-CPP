@@ -1,7 +1,7 @@
 #include<iostream>
 #include<string>
 #include "ArrayStack.h"
-#include "LinkStack.h"
+#include "LinkedStack.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ int main() {
 
   cout << endl << endl;
 
-  LinkStack<string>* linkStack = new LinkStack<string>();
+  LinkedStack<string>* linkStack = new LinkedStack<string>();
   try {
     cout << linkStack->peek() << endl;
   }

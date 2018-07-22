@@ -1,16 +1,17 @@
-#ifndef _LINK_STACK_H
-#define _LINK_STACK_H
+#ifndef _LINKED_STACK_H
+#define _LINKED_STACK_H
 
-#include "Node.h"
+#include "StackInterface.h"
+#include "../Node/Node.h"
 #include "stdexcept"
 using namespace std;
 
 template <class ItemType>
-class LinkStack {
+class LinkedStack : public StackInterface<ItemType> {
 private:
   Node<ItemType>* topPtr;
 public:
-  LinkStack();
+  LinkedStack();
 
   bool isEmpty() const;
   bool push(const ItemType& newItem);
@@ -18,5 +19,5 @@ public:
   ItemType peek() const throw (out_of_range);
 };
 
-#include "LinkStack.cpp"
+#include "LinkedStack.cpp"
 #endif

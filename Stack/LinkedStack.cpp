@@ -1,17 +1,17 @@
-#include "LinkStack.h"
+#include "LinkedStack.h"
 
 template <class ItemType>
-LinkStack<ItemType>::LinkStack() {
+LinkedStack<ItemType>::LinkedStack() {
   topPtr = nullptr;
 }
 
 template <class ItemType>
-bool LinkStack<ItemType>::isEmpty() const {
+bool LinkedStack<ItemType>::isEmpty() const {
   return topPtr == nullptr;
 }
 
 template <class ItemType>
-bool LinkStack<ItemType>::push(const ItemType& newItem) {
+bool LinkedStack<ItemType>::push(const ItemType& newItem) {
   Node<ItemType>* newNode = new Node<ItemType>(newItem, topPtr);
   topPtr = newNode;
   newNode = nullptr;
@@ -19,7 +19,7 @@ bool LinkStack<ItemType>::push(const ItemType& newItem) {
 }
 
 template <class ItemType>
-bool LinkStack<ItemType>::pop() {
+bool LinkedStack<ItemType>::pop() {
   if (!isEmpty()) {
     Node<ItemType>* delNode = topPtr;
     topPtr = topPtr->getNext();
@@ -33,7 +33,7 @@ bool LinkStack<ItemType>::pop() {
 }
 
 template <class ItemType>
-ItemType LinkStack<ItemType>::peek() const throw (out_of_range) {
+ItemType LinkedStack<ItemType>::peek() const throw (out_of_range) {
   if(!isEmpty()) {
     return topPtr->getItem();
   } else {

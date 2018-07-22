@@ -2,7 +2,6 @@
 
 template <class ItemType>
 Node<ItemType>::Node() {
-  item = NULL;
   next = nullptr;
 }
 

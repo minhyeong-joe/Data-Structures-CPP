@@ -1,13 +1,15 @@
 #ifndef _ARRAY_STACK_H
 #define _ARRAY_STACK_H
 
+#include "StackInterface.h"
+
 #include "stdexcept"
 using namespace std;
 
 const int MAX = 10;
 
 template <class ItemType>
-class ArrayStack {
+class ArrayStack : public StackInterface<ItemType> {
 private:
   ItemType items[MAX];
   int top;
