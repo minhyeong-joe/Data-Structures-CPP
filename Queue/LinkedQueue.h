@@ -2,7 +2,7 @@
 #define _LINKED_QUEUE_H
 
 #include "QueueInterface.h"
-#include "Node.h"
+#include "../Node/Node.h"
 
 template<class ItemType>
 class LinkedQueue : public QueueInterface<ItemType> {
