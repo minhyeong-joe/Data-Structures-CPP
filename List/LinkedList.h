@@ -1,19 +1,21 @@
-#ifndef _LINK_LIST_H
-#define _LINK_LIST_H
+#ifndef _LINKED_LIST_H
+#define _LINKED_LIST_H
 
+#include "ListInterface.h"
+#include "../Node/Node.h"
 #include <stdexcept>
-#include "Node.h"
+#include <iostream>
 using namespace std;
 
 template <class ItemType>
-class LinkList {
+class LinkedList : public ListInterface<ItemType> {
 private:
   Node<ItemType>* headPtr;
   int itemCount;
 
   Node<ItemType>* getNodeAt(const int& position) const throw(out_of_range);
 public:
-  LinkList();
+  LinkedList();
 
   bool isEmpty() const;
   int getItemCount() const;
@@ -22,7 +24,8 @@ public:
   bool insert(const int& position, const ItemType& newItem);
   bool remove(const int& position);
   bool replace(const int& position, const ItemType& newItem);
+  void displayEntry() const;
 };
 
-#include "LinkList.cpp"
+#include "LinkedList.cpp"
 #endif

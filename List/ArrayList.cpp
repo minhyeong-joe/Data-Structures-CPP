@@ -69,10 +69,10 @@ bool ArrayList<ItemType>::replace(const int& position, const ItemType& newItem) 
 template<class ItemType>
 void ArrayList<ItemType>::displayEntry() const {
   for (int i=1; i <= itemCount; i++) {
-    cout << getEntry(i) << " ";
+    cout << i << ". " << getEntry(i) << endl;
   }
   if (itemCount == 0) {
-    cout << "No Entries";
+    cout << "The list is empty." << endl;
   }
   cout << endl;
 }

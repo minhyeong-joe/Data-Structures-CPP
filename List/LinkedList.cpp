@@ -1,13 +1,13 @@
-#include "LinkList.h"
+#include "LinkedList.h"
 
 template<class ItemType>
-LinkList<ItemType>::LinkList() {
+LinkedList<ItemType>::LinkedList() {
   headPtr = nullptr;
   itemCount = 0;
 }
 
 template<class ItemType>
-Node<ItemType>* LinkList<ItemType>::getNodeAt(const int& position) const throw(out_of_range){
+Node<ItemType>* LinkedList<ItemType>::getNodeAt(const int& position) const throw(out_of_range){
   if(position>=1 && position <= itemCount) {
     Node<ItemType>* curPtr = headPtr;
     for(int i=1; i<position; i++) {
@@ -20,24 +20,24 @@ Node<ItemType>* LinkList<ItemType>::getNodeAt(const int& position) const throw(o
 }
 
 template<class ItemType>
-bool LinkList<ItemType>::isEmpty() const {
+bool LinkedList<ItemType>::isEmpty() const {
   return itemCount == 0;
 }
 
 template<class ItemType>
-int LinkList<ItemType>::getItemCount() const {
+int LinkedList<ItemType>::getItemCount() const {
   return itemCount;
 }
 
 template<class ItemType>
-void LinkList<ItemType>::reset() {
+void LinkedList<ItemType>::reset() {
   while(!isEmpty()) {
     remove(1);
   }
 }
 
 template<class ItemType>
-ItemType LinkList<ItemType>::getEntry(const int& position) const throw(out_of_range){
+ItemType LinkedList<ItemType>::getEntry(const int& position) const throw(out_of_range){
   if(position <= itemCount && position >= 1) {
     Node<ItemType>* curPtr = getNodeAt(position);
     return curPtr->getItem();
@@ -47,7 +47,7 @@ ItemType LinkList<ItemType>::getEntry(const int& position) const throw(out_of_ra
 }
 
 template<class ItemType>
-bool LinkList<ItemType>::insert(const int& position, const ItemType& newItem) {
+bool LinkedList<ItemType>::insert(const int& position, const ItemType& newItem) {
   if(position > itemCount+1 || position < 1) {
     return false;
   } else {
@@ -66,7 +66,7 @@ bool LinkList<ItemType>::insert(const int& position, const ItemType& newItem) {
 }
 
 template<class ItemType>
-bool LinkList<ItemType>::remove(const int& position) {
+bool LinkedList<ItemType>::remove(const int& position) {
   if(position > itemCount || position < 1) {
     return false;
   } else {
@@ -89,7 +89,7 @@ bool LinkList<ItemType>::remove(const int& position) {
 }
 
 template<class ItemType>
-bool LinkList<ItemType>::replace(const int& position, const ItemType& newItem) {
+bool LinkedList<ItemType>::replace(const int& position, const ItemType& newItem) {
   if (remove(position)) {
     insert(position, newItem);
     return true;
@@ -97,3 +97,17 @@ bool LinkList<ItemType>::replace(const int& position, const ItemType& newItem) {
     return false;
   }
 }
+
+template<class ItemType>
+void LinkedList<ItemType>::displayEntry() const {
+  if(isEmpty()) {
+    cout << "The list is empty." << endl;
+  } else {
+    Node<ItemType>* entryPtr = headPtr;
+    for(int i = 1; i <= itemCount; i++) {
+      cout << i << ". " << entryPtr->getItem() << endl;
+      entryPtr = entryPtr->getNext();
+    }
+  }
+  cout << endl;
+};

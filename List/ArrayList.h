@@ -1,11 +1,12 @@
 #ifndef _ARRAY_LIST_H
 #define _ARRAY_LIST_H
 
+#include "ListInterface.h"
 #include "stdexcept"
 using namespace std;
 
 template <class ItemType>
-class ArrayList {
+class ArrayList : public ListInterface<ItemType> {
 private:
   static const int MAX = 10;
   ItemType items[MAX];
