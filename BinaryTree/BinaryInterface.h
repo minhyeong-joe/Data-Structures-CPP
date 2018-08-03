@@ -14,9 +14,9 @@ public:
   virtual void clear() = 0;
   virtual ItemType find(const ItemType& targetItem) const = 0;
   virtual bool contains(const ItemType& targetItem) const = 0;
-  virtual void preOrder(void visit(ItemType&)) const = 0;
-  virtual void inOrder(void visit(ItemType&)) const = 0;
-  virtual void postOrder(void visit(ItemType&)) const = 0;
+  virtual void preOrder() const = 0;
+  virtual void inOrder() const = 0;
+  virtual void postOrder() const = 0;
 };
 
 #endif

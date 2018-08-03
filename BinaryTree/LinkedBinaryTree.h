@@ -20,16 +20,16 @@ protected:
   void destroyTree(BSTNode<ItemType>* subTreePtr);
 
   BSTNode<ItemType>* balancedAdd(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr);
-  BSTNode<ItemType>* removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target, bool& success);
-  BSTNode<ItemType>* moveValuesUpTree(BSTNode<ItemType>* subTreePtr);
-  BSTNode<ItemType>* findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target, bool& success) const;
+  // BSTNode<ItemType>* removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target);
+  // BSTNode<ItemType>* moveValuesUpTree(BSTNode<ItemType>* subTreePtr);
+  BSTNode<ItemType>* findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target) const;
 
   BSTNode<ItemType>* copyTree(const BSTNode<ItemType>* treePtr) const;
 
   // transversal helper
-  void preorder(void visit(ItemType&), BSTNode<ItemType>* subTreePtr) const;
-  void inorder(void visit(ItemType&), BSTNode<ItemType>* subTreePtr) const;
-  void postorder(void visit(ItemType&), BSTNode<ItemType>* subTreePtr) const;
+  void preorder(BSTNode<ItemType>* subTreePtr) const;
+  void inorder(BSTNode<ItemType>* subTreePtr) const;
+  void postorder(BSTNode<ItemType>* subTreePtr) const;
 public:
   // ===========================================================================
   // Constructors & Destructor
@@ -53,9 +53,9 @@ public:
   void clear();
   ItemType find(const ItemType& targetItem) const;
   bool contains(const ItemType& targetItem) const;
-  void preOrder(void visit(ItemType&)) const;
-  void inOrder(void visit(ItemType&)) const;
-  void postOrder(void visit(ItemType&)) const;
+  void preOrder() const;
+  void inOrder() const;
+  void postOrder() const;
 };
 
 #include "LinkedBinaryTree.cpp"
