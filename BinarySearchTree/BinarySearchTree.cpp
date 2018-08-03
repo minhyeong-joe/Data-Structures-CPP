@@ -1,30 +1,25 @@
-#include "LinkedBinaryTree.h"
+#include "BinarySearchTree.h"
 
 // =============================================================================
 // Constructors & Destructor
 // =============================================================================
 template<class ItemType>
-LinkedBinaryTree<ItemType>::LinkedBinaryTree() {
+BinarySearchTree<ItemType>::BinarySearchTree() {
   rootPtr = nullptr;
 }
 
 template<class ItemType>
-LinkedBinaryTree<ItemType>::LinkedBinaryTree(const ItemType& rootItem) {
+BinarySearchTree<ItemType>::BinarySearchTree(const ItemType& rootItem) {
   rootPtr = new BSTNode<ItemType>(rootItem, nullptr, nullptr);
 }
 
 template<class ItemType>
-LinkedBinaryTree<ItemType>::LinkedBinaryTree(const ItemType& rootItem, const BSTNode<ItemType>* leftChildPtr, BSTNode<ItemType>* rightChildPtr) {
-  rootPtr = new BSTNode<ItemType>(rootItem, copyTree(leftChildPtr), copyTree(rightChildPtr));
-}
-
-template<class ItemType>
-LinkedBinaryTree<ItemType>::LinkedBinaryTree(const LinkedBinaryTree<ItemType>* tree) {
+BinarySearchTree<ItemType>::BinarySearchTree(const BinarySearchTree<ItemType>* tree) {
   rootPtr = copyTree(tree->rootPtr);
 }
 
 template<class ItemType>
-LinkedBinaryTree<ItemType>::~LinkedBinaryTree() {
+BinarySearchTree<ItemType>::~BinarySearchTree() {
   destroyTree(rootPtr);
 }
 
@@ -32,7 +27,7 @@ LinkedBinaryTree<ItemType>::~LinkedBinaryTree() {
 // Helper functions
 // =============================================================================
 template<class ItemType>
-int LinkedBinaryTree<ItemType>::getHeightHelper(BSTNode<ItemType>* subTreePtr) const {
+int BinarySearchTree<ItemType>::getHeightHelper(BSTNode<ItemType>* subTreePtr) const {
   if (subTreePtr != nullptr) {
     return 1 + max(getHeightHelper(subTreePtr->getLeftChild()), getHeightHelper(subTreePtr->getRightChild()));
   } else {
@@ -41,7 +36,7 @@ int LinkedBinaryTree<ItemType>::getHeightHelper(BSTNode<ItemType>* subTreePtr) c
 }
 
 template<class ItemType>
-int LinkedBinaryTree<ItemType>::getNodeCountHelper(BSTNode<ItemType>* subTreePtr) const {
+int BinarySearchTree<ItemType>::getNodeCountHelper(BSTNode<ItemType>* subTreePtr) const {
   if (subTreePtr != nullptr) {
     return 1 + getNodeCountHelper(subTreePtr->getLeftChild()) + getNodeCountHelper(subTreePtr->getRightChild());
   } else {
@@ -50,7 +45,7 @@ int LinkedBinaryTree<ItemType>::getNodeCountHelper(BSTNode<ItemType>* subTreePtr
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::destroyTree(BSTNode<ItemType>* subTreePtr) {
+void BinarySearchTree<ItemType>::destroyTree(BSTNode<ItemType>* subTreePtr) {
   if (subTreePtr != nullptr) {
     destroyTree(subTreePtr->getLeftChild());
     destroyTree(subTreePtr->getRightChild());
@@ -59,37 +54,28 @@ void LinkedBinaryTree<ItemType>::destroyTree(BSTNode<ItemType>* subTreePtr) {
 }
 
 template<class ItemType>
-BSTNode<ItemType>* LinkedBinaryTree<ItemType>::balancedAdd(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr) {
-  if (subTreePtr != nullptr) {
-    BSTNode<ItemType>* leftChild = subTreePtr->getLeftChild();
-    BSTNode<ItemType>* rightChild = subTreePtr->getRightChild();
-    int leftHeight = getHeightHelper(leftChild);
-    int rightHeight = getHeightHelper(rightChild);
-    if (leftHeight > rightHeight) {
-      rightChild = balancedAdd(rightChild, newNodePtr);
-      subTreePtr->setRightChild(rightChild);
-    } else {
-      leftChild = balancedAdd(leftChild, newNodePtr);
-      subTreePtr->setLeftChild(leftChild);
-    }
-    return subTreePtr;
-  } else {
+BSTNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr) {
+  if (subTreePtr == nullptr) {
     return newNodePtr;
+  } else {
+    BSTNode<ItemType>* temp;
+    if (newNodePtr->getItem() < subTreePtr->getItem()) {
+      temp = insertInorder(subTreePtr->getLeftChild(), newNodePtr);
+      subTreePtr->setLeftChild(temp);
+    } else {
+      temp = insertInorder(subTreePtr->getRightChild(), newNodePtr);
+      subTreePtr->setRightChild(temp);
+    }
   }
 }
 
 template<class ItemType>
-BSTNode<ItemType>* LinkedBinaryTree<ItemType>::removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target) {
-  
+BSTNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target) {
+
 }
 
-// template<class ItemType>
-// BSTNode<ItemType>* LinkedBinaryTree<ItemType>::moveValuesUpTree(BSTNode<ItemType>* subTreePtr) {
-//   return new BSTNode<ItemType>();
-// }
-
 template<class ItemType>
-BSTNode<ItemType>* LinkedBinaryTree<ItemType>::findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target) const {
+BSTNode<ItemType>* BinarySearchTree<ItemType>::findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target) const {
   if (subTreePtr == nullptr) {
     return nullptr;
   } else if (subTreePtr->getItem() == target) {
@@ -106,7 +92,7 @@ BSTNode<ItemType>* LinkedBinaryTree<ItemType>::findNode(BSTNode<ItemType>* subTr
 }
 
 template<class ItemType>
-BSTNode<ItemType>* LinkedBinaryTree<ItemType>::copyTree(const BSTNode<ItemType>* treePtr) const {
+BSTNode<ItemType>* BinarySearchTree<ItemType>::copyTree(const BSTNode<ItemType>* treePtr) const {
   BSTNode<ItemType>* newTreePtr = nullptr;
   if(treePtr != nullptr) {
     newTreePtr = new BSTNode<ItemType>(treePtr->getItem(), nullptr, nullptr);
@@ -118,7 +104,7 @@ BSTNode<ItemType>* LinkedBinaryTree<ItemType>::copyTree(const BSTNode<ItemType>*
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::preorder(BSTNode<ItemType>* subTreePtr) const {
+void BinarySearchTree<ItemType>::preorder(BSTNode<ItemType>* subTreePtr) const {
   if (subTreePtr == nullptr) {
     return;
   }
@@ -128,7 +114,7 @@ void LinkedBinaryTree<ItemType>::preorder(BSTNode<ItemType>* subTreePtr) const {
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::inorder(BSTNode<ItemType>* subTreePtr) const {
+void BinarySearchTree<ItemType>::inorder(BSTNode<ItemType>* subTreePtr) const {
   if (subTreePtr == nullptr) {
     return;
   }
@@ -138,7 +124,7 @@ void LinkedBinaryTree<ItemType>::inorder(BSTNode<ItemType>* subTreePtr) const {
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::postorder(BSTNode<ItemType>* subTreePtr) const {
+void BinarySearchTree<ItemType>::postorder(BSTNode<ItemType>* subTreePtr) const {
   if (subTreePtr == nullptr) {
     return;
   }
@@ -151,77 +137,71 @@ void LinkedBinaryTree<ItemType>::postorder(BSTNode<ItemType>* subTreePtr) const 
 // Public Methods
 // =============================================================================
 template<class ItemType>
-bool LinkedBinaryTree<ItemType>::isEmpty() const {
+bool BinarySearchTree<ItemType>::isEmpty() const {
   return rootPtr == nullptr;
 }
 
 template<class ItemType>
-int LinkedBinaryTree<ItemType>::getHeight() const {
+int BinarySearchTree<ItemType>::getHeight() const {
   return getHeightHelper(rootPtr);
 }
 
 template<class ItemType>
-int LinkedBinaryTree<ItemType>::getNodeCount() const {
+int BinarySearchTree<ItemType>::getNodeCount() const {
   return getNodeCountHelper(rootPtr);
 }
 
 template<class ItemType>
-ItemType LinkedBinaryTree<ItemType>::getRoot() const {
+ItemType BinarySearchTree<ItemType>::getRootData() const {
   ItemType rootData = rootPtr->getItem();
   return rootData;
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::setRoot(const ItemType& newItem) {
-  rootPtr->setItem(newItem);
+void BinarySearchTree<ItemType>::setRootData(const ItemType& newData) {
+  rootPtr->setItem(newData);
 }
 
 template<class ItemType>
-bool LinkedBinaryTree<ItemType>::add(const ItemType& newItem) {
-  BSTNode<ItemType>* newNodePtr = new BSTNode<ItemType>(newItem);
-  rootPtr = balancedAdd(rootPtr, newNodePtr);
+bool BinarySearchTree<ItemType>::add(const ItemType& newData) {
+  BSTNode<ItemType>* newNodePtr = new BSTNode<ItemType>(newData);
+  rootPtr = insertInorder(rootPtr, newNodePtr);
   return true;
 }
 
 template<class ItemType>
-bool LinkedBinaryTree<ItemType>::remove(const ItemType& delItem) {
+bool BinarySearchTree<ItemType>::remove(const ItemType& aData) {
 
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::clear() {
+void BinarySearchTree<ItemType>::clear() {
 
 }
 
 template<class ItemType>
-ItemType LinkedBinaryTree<ItemType>::find(const ItemType& targetItem) const {
-  BSTNode<ItemType>* targetNode = findNode(rootPtr, targetItem);
-  return targetNode->getItem();
-}
-
-template<class ItemType>
-bool LinkedBinaryTree<ItemType>::contains(const ItemType& targetItem) const {
+bool BinarySearchTree<ItemType>::contains(const ItemType& target) const {
   bool contain = false;
-  if (findNode(rootPtr, targetItem) != nullptr) {
+  if (findNode(rootPtr, target) != nullptr) {
     contain = true;
   }
   return contain;
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::preOrder() const {
+void BinarySearchTree<ItemType>::printPreorder() const {
   preorder(rootPtr);
   cout << endl;
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::inOrder() const {
+void BinarySearchTree<ItemType>::printInorder() const {
   inorder(rootPtr);
   cout << endl;
 }
 
 template<class ItemType>
-void LinkedBinaryTree<ItemType>::postOrder() const {
+void BinarySearchTree<ItemType>::printPostorder() const {
   postorder(rootPtr);
   cout << endl;
 }

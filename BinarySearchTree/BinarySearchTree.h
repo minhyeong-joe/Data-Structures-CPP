@@ -1,27 +1,26 @@
-#ifndef _LINKED_BINARY_TREE_H
-#define _LINKED_BINARY_TREE_H
+#ifndef _BINARY_SEARCH_TREE_H
+#define _BINARY_SEARCH_TREE_H
 
-#include "BinaryInterface.h"
-#include "BSTNode.h"
-#include <stdexcept>
+#include "../BinaryTree/BSTNode.h"
+#include<stdexcept>
+#include<iostream>
+
 using namespace std;
 
 template<class ItemType>
-class LinkedBinaryTree : public BinaryInterface<ItemType> {
+class BinarySearchTree {
 private:
   BSTNode<ItemType>* rootPtr;
-
 protected:
   // ===========================================================================
-  // Helper functions (recursive functions)
+  // Helper functions (recursive)
   // ===========================================================================
   int getHeightHelper(BSTNode<ItemType>* subTreePtr) const;
   int getNodeCountHelper(BSTNode<ItemType>* subTreePtr) const;
   void destroyTree(BSTNode<ItemType>* subTreePtr);
 
-  BSTNode<ItemType>* balancedAdd(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr);
+  BSTNode<ItemType>* insertInorder(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr);
   BSTNode<ItemType>* removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target);
-  // BSTNode<ItemType>* moveValuesUpTree(BSTNode<ItemType>* subTreePtr);
   BSTNode<ItemType>* findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target) const;
 
   BSTNode<ItemType>* copyTree(const BSTNode<ItemType>* treePtr) const;
@@ -30,33 +29,33 @@ protected:
   void preorder(BSTNode<ItemType>* subTreePtr) const;
   void inorder(BSTNode<ItemType>* subTreePtr) const;
   void postorder(BSTNode<ItemType>* subTreePtr) const;
+
 public:
   // ===========================================================================
   // Constructors & Destructor
   // ===========================================================================
-  LinkedBinaryTree();
-  LinkedBinaryTree(const ItemType& rootItem);
-  LinkedBinaryTree(const ItemType& rootItem, const BSTNode<ItemType>* leftChildPtr, BSTNode<ItemType>* rightChildPtr);
-  LinkedBinaryTree(const LinkedBinaryTree<ItemType>* tree);
-  virtual ~LinkedBinaryTree();
+  BinarySearchTree();
+  BinarySearchTree(const ItemType& rootItem);
+  BinarySearchTree(const BinarySearchTree<ItemType>* tree);
+  virtual ~BinarySearchTree();
 
   // ===========================================================================
-  // Public methods from interface
+  // Public Methods
   // ===========================================================================
   bool isEmpty() const;
   int getHeight() const;
   int getNodeCount() const;
-  ItemType getRoot() const;
-  void setRoot(const ItemType& newItem);
-  bool add(const ItemType& newItem);
-  bool remove(const ItemType& delItem);
+  ItemType getRootData() const;
+  void setRootData(const ItemType& newData);
+  bool add(const ItemType& newData);
+  bool remove(const ItemType& aData);
   void clear();
-  ItemType find(const ItemType& targetItem) const;
-  bool contains(const ItemType& targetItem) const;
-  void preOrder() const;
-  void inOrder() const;
-  void postOrder() const;
+  bool contains(const ItemType& target) const;
+
+  void printPreorder() const;
+  void printInorder() const;
+  void printPostorder() const;
 };
 
-#include "LinkedBinaryTree.cpp"
+#include "BinarySearchTree.cpp"
 #endif
