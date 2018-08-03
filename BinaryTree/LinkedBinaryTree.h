@@ -11,17 +11,20 @@ class LinkedBinaryTree : public BinaryInterface<ItemType> {
 private:
   BSTNode<ItemType>* rootPtr;
 
+protected:
   // ===========================================================================
   // Helper functions (recursive functions)
   // ===========================================================================
   int getHeightHelper(BSTNode<ItemType>* subTreePtr) const;
-  int getNodeCountHelper(BSTNed<ItemType>* subTreePtr) const;
+  int getNodeCountHelper(BSTNode<ItemType>* subTreePtr) const;
   void destroyTree(BSTNode<ItemType>* subTreePtr);
 
   BSTNode<ItemType>* balancedAdd(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr);
   BSTNode<ItemType>* removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target, bool& success);
   BSTNode<ItemType>* moveValuesUpTree(BSTNode<ItemType>* subTreePtr);
   BSTNode<ItemType>* findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target, bool& success) const;
+
+  BSTNode<ItemType>* copyTree(const BSTNode<ItemType>* treePtr) const;
 
   // transversal helper
   void preorder(void visit(ItemType&), BSTNode<ItemType>* subTreePtr) const;
@@ -32,7 +35,9 @@ public:
   // Constructors & Destructor
   // ===========================================================================
   LinkedBinaryTree();
-  LinkedBinaryTree(const LinkedBinaryTree<ItemType>& aTree);
+  LinkedBinaryTree(const ItemType& rootItem);
+  LinkedBinaryTree(const ItemType& rootItem, const BSTNode<ItemType>* leftChildPtr, BSTNode<ItemType>* rightChildPtr);
+  LinkedBinaryTree(const LinkedBinaryTree<ItemType>* tree);
   virtual ~LinkedBinaryTree();
 
   // ===========================================================================
