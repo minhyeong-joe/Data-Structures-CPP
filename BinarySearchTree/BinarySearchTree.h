@@ -21,6 +21,9 @@ protected:
 
   BSTNode<ItemType>* insertInorder(BSTNode<ItemType>* subTreePtr, BSTNode<ItemType>* newNodePtr);
   BSTNode<ItemType>* removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target);
+  BSTNode<ItemType>* removeNode(BSTNode<ItemType>* nodePtr);
+  BSTNode<ItemType>* leftMostNode(BSTNode<ItemType>* nodePtr);
+  BSTNode<ItemType>* removeLeftMostNode(BSTNode<ItemType>* nodePtr);
   BSTNode<ItemType>* findNode(BSTNode<ItemType>* subTreePtr, const ItemType& target) const;
 
   BSTNode<ItemType>* copyTree(const BSTNode<ItemType>* treePtr) const;

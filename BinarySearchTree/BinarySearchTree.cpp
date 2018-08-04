@@ -46,7 +46,7 @@ int BinarySearchTree<ItemType>::getNodeCountHelper(BSTNode<ItemType>* subTreePtr
 
 template<class ItemType>
 void BinarySearchTree<ItemType>::destroyTree(BSTNode<ItemType>* subTreePtr) {
-  if (subTreePtr != nullptr) {
+  if (subTreePtr != NULL) {
     destroyTree(subTreePtr->getLeftChild());
     destroyTree(subTreePtr->getRightChild());
     delete subTreePtr;
@@ -71,7 +71,68 @@ BSTNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BSTNode<ItemType>* 
 
 template<class ItemType>
 BSTNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BSTNode<ItemType>* subTreePtr, const ItemType target) {
+  BSTNode<ItemType>* temp;
+  if (subTreePtr == nullptr) {
+    return nullptr;
+  } else if (subTreePtr->getItem() == target) {
+    subTreePtr = removeNode(subTreePtr);
+    return subTreePtr;
+  } else if (subTreePtr->getItem() > target) {
+    temp = removeValue(subTreePtr->getLeftChild(), target);
+    subTreePtr->setLeftChild(temp);
+    return subTreePtr;
+  } else if (subTreePtr->getItem() < target) {
+    temp = removeValue(subTreePtr->getRightChild(), target);
+    subTreePtr->setRightChild(temp);
+    return subTreePtr;
+  }
+}
 
+template<class ItemType>
+BSTNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BSTNode<ItemType>* nodePtr) {
+  if( nodePtr->getLeftChild() == nullptr && nodePtr->getRightChild() == nullptr) {
+    delete nodePtr;
+    nodePtr = nullptr;
+    return nodePtr;
+  } else if ( (nodePtr->getLeftChild() != nullptr && nodePtr->getRightChild() == nullptr) || (nodePtr->getLeftChild() == nullptr && nodePtr->getRightChild() != nullptr)) {
+    BSTNode<ItemType>* connectNodePtr;
+    if ( nodePtr->getRightChild() == nullptr && nodePtr->getLeftChild() != nullptr) {
+      connectNodePtr = nodePtr->getLeftChild();
+    } else {
+      connectNodePtr = nodePtr->getRightChild();
+    }
+    delete nodePtr;
+    nodePtr = nullptr;
+    return connectNodePtr;
+  } else {
+    BSTNode<ItemType>* temp;
+    BSTNode<ItemType>* rightChild = nodePtr->getRightChild();
+    BSTNode<ItemType>* leftMostNodePtr = leftMostNode(rightChild);
+    nodePtr->setItem(leftMostNodePtr->getItem());
+    nodePtr->setRightChild(rightChild);
+    removeValue(rightChild, leftMostNodePtr->getItem());
+    return nodePtr;
+  }
+}
+
+template<class ItemType>
+BSTNode<ItemType>* BinarySearchTree<ItemType>::leftMostNode(BSTNode<ItemType>* nodePtr) {
+  if ( nodePtr->getLeftChild() == nullptr) {
+    return nodePtr;
+  } else {
+    return leftMostNode(nodePtr->getLeftChild());
+  }
+}
+
+template<class ItemType>
+BSTNode<ItemType>* BinarySearchTree<ItemType>::removeLeftMostNode(BSTNode<ItemType>* nodePtr) {
+  if (nodePtr->getLeftChild() == nullptr) {
+    // cout << nodePtr->getItem() << endl;
+    return removeNode(nodePtr);
+  } else {
+    // cout << "removeLeftMost recursion" << endl;
+    return removeLeftMostNode(nodePtr->getLeftChild());
+  }
 }
 
 template<class ItemType>
@@ -80,14 +141,10 @@ BSTNode<ItemType>* BinarySearchTree<ItemType>::findNode(BSTNode<ItemType>* subTr
     return nullptr;
   } else if (subTreePtr->getItem() == target) {
     return subTreePtr;
+  } else if (subTreePtr->getItem() > target) {
+    return findNode(subTreePtr->getLeftChild(), target);
   } else {
-    BSTNode<ItemType>* leftChild = findNode(subTreePtr->getLeftChild(), target);
-    BSTNode<ItemType>* rightChild = findNode(subTreePtr->getRightChild(), target);
-    if (leftChild) {
-      return leftChild;
-    } else {
-      return rightChild;
-    }
+    return findNode(subTreePtr->getRightChild(), target);
   }
 }
 
@@ -171,12 +228,13 @@ bool BinarySearchTree<ItemType>::add(const ItemType& newData) {
 
 template<class ItemType>
 bool BinarySearchTree<ItemType>::remove(const ItemType& aData) {
-
+  rootPtr = removeValue(rootPtr, aData);
+  return true;
 }
 
 template<class ItemType>
 void BinarySearchTree<ItemType>::clear() {
-
+  destroyTree(rootPtr);
 }
 
 template<class ItemType>
